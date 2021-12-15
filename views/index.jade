@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 Fullstack/Frontend Developer Technical Test
+  p Welcome to your technical interview.
+  p Prepare you IDE and favorite web stack. You will need to hit the following REST APIS:
+
+  h2 GET /sample-get
+  p on: 200
+    li returns: {'text': 'Hello World'}
+  p on: 429
+    li Rate limit reached.
+  p on: 500
+    li Server failure. 
+
+   
+
