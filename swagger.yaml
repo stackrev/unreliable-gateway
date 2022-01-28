@@ -1,0 +1,88 @@
+---
+swagger: "2.0"
+info:
+  description: "Technical Test - unreliable server."
+  version: "1.0.0"
+  title: "TechnicalTest"
+schemes:
+- "http"
+produces:
+- "application/json"
+paths:
+  /greeting:
+    post:
+      summary: "The greeting to use."
+      operationId: "greeting"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "greetingData"
+        description: "The greeting data."
+        required: false
+        schema:
+        
+          type: "object"
+          required:
+          - "greeting_str"
+          properties:
+            greeting_str:
+              type: "string"
+      responses:  
+        "200":
+          description: "OK"
+        "400":
+          description: "Bad request or wrong order."
+        "429":
+          description: "Rate limit reached."
+        "500":
+          description: "An Internal error."
+      x-swagger-router-controller: "Default"
+  /person:
+    post:
+      summary: "The person to greet."
+      operationId: "person"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "persongData"
+        description: "The person's data."
+        required: false
+        schema:
+          type: "object"
+          required:
+          - "firstname_str"
+          properties:
+            firstname_str:
+              type: "string"
+            lastname_str:
+              type: "string"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "Bad request or wrong order."
+        "429":
+          description: "Rate limit reached."
+        "500":
+          description: "An Internal error."
+      x-swagger-router-controller: "Default"
+  /message:
+    get:
+      summary: "The built message."
+      operationId: "message"
+      parameters: []
+      responses:
+        "200":
+          description: "A JSON object containing user's greeting message."
+          schema:
+            type: "object"
+            properties:
+              message_str:
+                type: "string"
+        "429":
+          description: "Rate limit reached."
+        "500":
+          description: "An Internal error."
+      x-swagger-router-controller: "Default"

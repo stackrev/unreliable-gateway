@@ -1,17 +1,101 @@
 extends layout
 
 block content
-  h1 Fullstack/Frontend Developer Technical Test
-  p Welcome to your technical interview.
-  p Prepare you IDE and favorite web stack. You will need to hit the following REST APIS:
+  h1 Technical Test
+  h2 Welcome to your technical interview.
+  p Prepare you IDE and favorite web stack.
+  p Posts in the right order and get the greeting described here. The server is unreliable
+  | this means it can fail or freeze for an arbitary time.
+  
+  h1 Server's OpenAPI for the TechnicalTest
+  :markdown
+    Technical Test - unreliable server.
 
-  h2 GET /sample-get
-  p on: 200
-    li returns: {'text': 'Hello World'}
-  p on: 429
-    li Rate limit reached.
-  p on: 500
-    li Server failure. 
+    ## Path Table
 
-   
+    | Method | Path | Description |
+    | --- | --- | --- |
+    | POST | [/greeting](#postgreeting) | The greeting to use. |
+    | GET | [/message](#getmessage) | The built message. |
+    | POST | [/person](#postperson) | The person to greet. |
 
+    ## Reference Table
+
+    | Name | Path | Description |
+    | --- | --- | --- |
+
+    ## Path Details
+
+    ***
+
+    ### [POST]/greeting
+
+    The greeting to use.
+
+    #### RequestBody
+
+    - application/json
+
+    ```ts
+    {
+    greeting_str: string
+    }
+    ```
+
+    #### Responses
+
+    - 200 OK
+    - 400 Bad request or wrong order.
+    - 429 Rate limit reached.
+    - 500 An Internal error.
+
+    ***
+
+    ### [GET]/message
+ 
+    The built message.
+
+    #### Responses
+
+    - 200 A JSON object containing user's greeting message.
+    - 400 Required data not available.
+    - 429 Rate limit reached.
+    - 500 An Internal error.
+
+    `application/json`
+
+    ```ts
+    {
+    message_str?: string
+    }
+    ```
+
+    - 429 Rate limit reached.
+
+    - 500 An Internal error.
+
+    ***
+
+    ### [POST]/person
+
+    The person to greet.
+
+    #### RequestBody
+
+    - application/json
+
+    ```ts
+    {
+    firstname_str: string
+    lastname_str?: string
+    }
+    ```
+
+    #### Responses
+
+    - 200 OK
+    - 400 Bad request or wrong order.
+    - 429 Rate limit reached.
+    - 500 An Internal error.
+
+    
