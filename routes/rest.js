@@ -1,11 +1,20 @@
 const express = require("express");
 const router = express.Router();
 
+const MIN_RATELIMIT = 0;
+const MAX_RATELIMIT = 3;
+const FAILURE_CHANCE = 30;
+const MIN_REQUEST_TIMEOUT = 1000;
+const MAX_REQUEST_TIMEOUT = 40000;
+
 let activeRequests = 0;
 
 let greeting = null;
 let person = null;
 
+/**
+ * GREETING API
+ */
 router.post("/greeting", async function (req, res) {
   if (shouldItFail()) {
     console.log(`This call will fail`);
@@ -28,6 +37,9 @@ router.post("/greeting", async function (req, res) {
   }
 });
 
+/**
+ * PERSON API
+ */
 router.post("/person", async function (req, res) {
   if (shouldItFail()) {
     console.log(`This call will fail`);
@@ -49,19 +61,16 @@ router.post("/person", async function (req, res) {
   }
 });
 
+/**
+ * MESSAGE API
+ */
 router.get("/message", async function (req, res) {
-  if (!greeting || person) {
-    res.status(400);
-    res.send("Required data not set");
-  }
-  if (shouldItFail()) {
-    console.log(`This call will fail`);
-    res.status(500);
-    res.send("Random failure");
+  if (!greeting || !person) {
+    failCommonOperations(res, 400, "Required data not set");
+  } else if (shouldItFail()) {
+    failCommonOperations(res, 500, "Random failure");
   } else if (rateLimitReached()) {
-    console.log(`This call reached its ratelimit`);
-    res.status(429);
-    res.send("Rate limit reached");
+    failCommonOperations(res, 429, "Rate limit reached");
   } else {
     activeRequests++;
     const resJSON = await timeDelayedResponse(() => {
@@ -75,26 +84,51 @@ router.get("/message", async function (req, res) {
   }
 });
 
-function rateLimitReached() {
-  const MAX_REQUESTS = 1;
+/**
+ * Common failure operations.
+ *
+ * @param {Response} res
+ * @param {number} status
+ * @param {string} statusMsg
+ */
+function failCommonOperations(res, status, statusMsg) {
+  greeting = null;
+  person = null;
 
-  return activeRequests > MAX_REQUESTS;
+  res.status(status);
+  res.send(statusMsg);
 }
 
-function shouldItFail() {
-  const FAILURE_CHANCE = 30;
+/**
+ * Test if the random rate limit was reached.
+ * @returns {bool} true or false.
+ */
+function rateLimitReached() {
+  const currentRate = Math.floor(Math.random() * MAX_RATELIMIT) + MIN_RATELIMIT;
 
+  return activeRequests > currentRate;
+}
+
+/**
+ * Test if a random server failure ought to happen.
+ * @returns {bool} true or false.
+ */
+function shouldItFail() {
   let failRoll = Math.floor(Math.random() * 100);
 
   return failRoll < FAILURE_CHANCE;
 }
 
+/**
+ * Wrap the callback which runs an API request with a random delay.
+ * @param {*} cbFunction A callback function
+ * @returns {*} Whatever the callback returns.
+ */
 async function timeDelayedResponse(cbFunction) {
-  const MIN_MS = 1000;
-  const MAX_MS = 10000;
   let RESP_JSON = null;
 
-  let randomDelayMS = Math.floor(Math.random() * MAX_MS) + MIN_MS;
+  let randomDelayMS =
+    Math.floor(Math.random() * MAX_REQUEST_TIMEOUT) + MIN_REQUEST_TIMEOUT;
   console.log(`Time delay for this call is: ${randomDelayMS}`);
 
   await new Promise((resolve) => setTimeout(resolve, randomDelayMS));
@@ -104,10 +138,5 @@ async function timeDelayedResponse(cbFunction) {
 
   return RESP_JSON;
 }
-
-/* GET home page. */
-router.get("/", function (req, res) {
-  res.render("index", { title: "Express" });
-});
 
 module.exports = router;
