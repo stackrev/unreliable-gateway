@@ -23,9 +23,9 @@ But it comes with these challenges:
 - Can we timeout.
 - Can we retry without failing.
 
-Access it life on REPLIT: https://unreliable-gateway.radmada.repl.co/
+Access it life on REPLIT: [https://unreliable-gateway.radmada.repl.co/]((https://unreliable-gateway.radmada.repl.co)
 
-REPLIT workspace publicly available: https://replit.com/@radmada/unreliable-gateway
+REPLIT workspace publicly available: [https://replit.com/@radmada/unreliable-gateway](https://replit.com/@radmada/unreliable-gateway)
 
 # Technical Test OpenAPI - unreliable server.
 
