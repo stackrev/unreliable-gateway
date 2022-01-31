@@ -2,7 +2,7 @@
   "name": "sample-gateway",
   "version": "0.0.0",
   "private": false,
-  "description": "![chaosgorilla](./chaos.jpg)",
+  "description": "This is an unreliable API Server that can be used in code challenges and tests to see how participants would deal with an unreliable service.",
   "main": "app.js",
   "repository": {
     "type": "git",
