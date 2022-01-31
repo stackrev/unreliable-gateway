@@ -1,7 +1,7 @@
 {
   "name": "sample-gateway",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "description": "![chaosgorilla](./chaos.jpg)",
   "main": "app.js",
   "repository": {
@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "https://github.com/adamd1985",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/adamd1985/unreliable-gateway/issues"
   },
