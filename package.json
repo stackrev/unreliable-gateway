@@ -2,10 +2,26 @@
   "name": "sample-gateway",
   "version": "0.0.0",
   "private": true,
+  "description": "![chaosgorilla](./chaos.jpg)",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamd1985/unreliable-gateway.git"
+  },
+  "keywords": [],
+  "author": "https://github.com/adamd1985",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adamd1985/unreliable-gateway/issues"
+  },
+  "homepage": "https://github.com/adamd1985/unreliable-gateway#readme",
   "scripts": {
     "start": "node ./bin/www",
     "prepare": "husky install",
     "lint": "eslint **/*.js --fix"
+  },
+  "engines": {
+    "node": ">=13.0"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -19,7 +35,8 @@
   "devDependencies": {
     "eslint": "^8.7.0",
     "husky": "^7.0.4",
-    "lint-staged": "^12.3.2"
+    "lint-staged": "^12.3.2",
+    "node": "^16.13.2"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
