@@ -9,7 +9,7 @@ schemes:
 produces:
 - "application/json"
 paths:
-  /greeting:
+  /rest/greeting:
     post:
       summary: "The greeting to use."
       operationId: "greeting"
@@ -38,7 +38,7 @@ paths:
         "500":
           description: "An Internal error."
       x-swagger-router-controller: "Default"
-  /person:
+  /rest/person:
     post:
       summary: "The person to greet."
       operationId: "person"
@@ -68,7 +68,7 @@ paths:
         "500":
           description: "An Internal error."
       x-swagger-router-controller: "Default"
-  /message:
+  /rest/message:
     get:
       summary: "The built message."
       operationId: "message"
